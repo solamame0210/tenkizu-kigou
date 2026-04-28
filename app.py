@@ -25,7 +25,7 @@ ws = {
 "◯×":"天気不明"
 }
 
-st.title("天気記号クイズ（完全版）")
+st.title("天気記号クイズ")
 
 # セッション初期化
 if "current" not in st.session_state:
