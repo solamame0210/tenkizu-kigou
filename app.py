@@ -116,7 +116,7 @@ def draw_symbol(s):
   <div style="
     position:absolute;
     top:50%; left:50%;
-    transform:translate(-50%,-50%);
+    transform:translate(-50%,-48%);
     font-size:70px;">
     {ch}
   </div>
