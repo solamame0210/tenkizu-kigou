@@ -1,12 +1,14 @@
+import streamlit as st
+import random
+
+# フォント（ズレ対策）
 st.markdown("""
 <style>
-div {
+* {
   font-family: "Noto Sans JP", "Arial Unicode MS", sans-serif;
 }
 </style>
 """, unsafe_allow_html=True)
-import streamlit as st
-import random
 
 ws = {
 "◯":"快晴",
@@ -32,52 +34,64 @@ ws = {
 "◯×":"天気不明"
 }
 
-st.title("天気記号クイズ")
+st.title("天気記号クイズ（完成版）")
 
-# セッション初期化
+# 初期化
 if "current" not in st.session_state:
     st.session_state.current = random.choice(list(ws.keys()))
 if "score" not in st.session_state:
     st.session_state.score = 0
 
+
+# 記号描画（完全安定版）
 def draw_symbol(s):
     base = s[0]
     rest = s[1:]
 
     html = f"""
-    <div style="position:relative;width:120px;height:120px;margin:auto;">
-      <div style="position:absolute;font-size:100px;
-                  top:50%;left:50%;
-                  transform:translate(-50%,-50%);">
+    <div style="position:relative;width:140px;height:140px;margin:auto;">
+      <div style="
+        position:absolute;
+        top:50%; left:50%;
+        transform:translate(-50%,-50%);
+        font-size:110px;">
         {base}
       </div>
     """
 
     for ch in rest:
+        # 小カタカナ（右下）
         if ch in "ツニキ":
             html += f"""
-            <div style="position:absolute;bottom:5px;right:8px;font-size:25px;">
+            <div style="
+              position:absolute;
+              bottom:8px; right:10px;
+              font-size:30px;">
               {ch}
             </div>
             """
+
+        # ＊（回転）
         elif ch == "＊":
             html += """
             <div style="
-            position:absolute;
-            top:50%;left:50%;
-            transform:translate(-50%,-50%) rotate(90deg);
-            font-size:60px;">
-            *
+              position:absolute;
+              top:50%; left:50%;
+              transform:translate(-50%,-50%) rotate(90deg);
+              font-size:70px;">
+              ＊
             </div>
             """
+
+        # その他（中央）
         else:
             html += f"""
             <div style="
-            position:absolute;
-            top:50%;left:50%;
-            transform:translate(-50%,-50%);
-            font-size:60px;">
-            {ch}
+              position:absolute;
+              top:50%; left:50%;
+              transform:translate(-50%,-50%);
+              font-size:70px;">
+              {ch}
             </div>
             """
 
@@ -85,13 +99,13 @@ def draw_symbol(s):
     return html
 
 
-# 記号表示
+# 表示
 st.markdown(draw_symbol(st.session_state.current), unsafe_allow_html=True)
 
-# スコア表示
+# スコア
 st.write(f"連続正解数：{st.session_state.score}")
 
-# Enterで回答（form）
+# 入力（Enter対応）
 with st.form(key="quiz_form", clear_on_submit=True):
     answer = st.text_input("意味を入力")
     submit = st.form_submit_button("回答")
@@ -99,8 +113,8 @@ with st.form(key="quiz_form", clear_on_submit=True):
 if submit:
     if answer == ws[st.session_state.current]:
         st.success("正解！")
-        st.session_state.score += 1  # ②スコア加算
-        st.session_state.current = random.choice(list(ws.keys()))  # ①次の問題
+        st.session_state.score += 1
+        st.session_state.current = random.choice(list(ws.keys()))
     else:
         st.error(f"不正解：{ws[st.session_state.current]}")
-        st.session_state.score = 0  # ミスでリセット
+        st.session_state.score = 0
