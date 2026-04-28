@@ -98,7 +98,7 @@ def draw_symbol(s):
   top:50%; left:50%;
   transform:translate(-50%,-50%);
   width:4px;
-  height:80px;   
+  height:100px;   
   background:black;">
   </div>
 """
