@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+import time
 
 # フォント（ズレ防止）
 st.markdown("""
@@ -34,7 +35,7 @@ ws = {
 "◯×":"天気不明"
 }
 
-st.title("天気記号クイズ")
+st.title("天気記号クイズ（完成版）")
 
 # 初期化
 if "current" not in st.session_state:
@@ -60,7 +61,6 @@ def draw_symbol(s):
 """
 
     for ch in rest:
-        # 小カタカナ（右下）
         if ch in "ツニキ":
             html += f"""
   <div style="
@@ -70,7 +70,6 @@ def draw_symbol(s):
     {ch}
   </div>
 """
-        # ＊（回転）
         elif ch == "＊":
             html += """
   <div style="
@@ -81,7 +80,6 @@ def draw_symbol(s):
     ＊
   </div>
 """
-        # その他（中央）
         else:
             html += f"""
   <div style="
@@ -97,7 +95,7 @@ def draw_symbol(s):
     return html
 
 
-# ❗ここが重要（HTMLとして表示）
+# 表示
 st.markdown(draw_symbol(st.session_state.current), unsafe_allow_html=True)
 
 # スコア
@@ -108,11 +106,14 @@ with st.form(key="quiz_form", clear_on_submit=True):
     answer = st.text_input("意味を入力")
     submit = st.form_submit_button("回答")
 
+# 判定
 if submit:
     if answer == ws[st.session_state.current]:
         st.success("正解！")
         st.session_state.score += 1
         st.session_state.current = random.choice(list(ws.keys()))
+        time.sleep(0.5)   # ← ちょい余韻
+        st.rerun()        # ← 即次の問題へ
     else:
         st.error(f"不正解：{ws[st.session_state.current]}")
         st.session_state.score = 0
