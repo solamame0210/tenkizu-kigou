@@ -65,7 +65,7 @@ def draw_symbol(s):
             html += f"""
   <div style="
     position:absolute;
-    bottom:-4px; right:10px;
+    bottom:-4px; right:12px;
     font-size:30px;">
     {ch}
   </div>
