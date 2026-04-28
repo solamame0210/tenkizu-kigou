@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-# フォント（ズレ対策）
+# フォント（ズレ防止）
 st.markdown("""
 <style>
 * {
@@ -34,7 +34,7 @@ ws = {
 "◯×":"天気不明"
 }
 
-st.title("天気記号クイズ")
+st.title("天気記号クイズ（完成版）")
 
 # 初期化
 if "current" not in st.session_state:
@@ -43,63 +43,61 @@ if "score" not in st.session_state:
     st.session_state.score = 0
 
 
-# 記号描画（完全安定版）
+# 記号描画
 def draw_symbol(s):
     base = s[0]
     rest = s[1:]
 
     html = f"""
-    <div style="position:relative;width:140px;height:140px;margin:auto;">
-      <div style="
-        position:absolute;
-        top:50%; left:50%;
-        transform:translate(-50%,-50%);
-        font-size:110px;">
-        {base}
-      </div>
-    """
+<div style="position:relative;width:140px;height:140px;margin:auto;">
+  <div style="
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    font-size:110px;">
+    {base}
+  </div>
+"""
 
     for ch in rest:
         # 小カタカナ（右下）
         if ch in "ツニキ":
             html += f"""
-            <div style="
-              position:absolute;
-              bottom:8px; right:10px;
-              font-size:30px;">
-              {ch}
-            </div>
-            """
-
+  <div style="
+    position:absolute;
+    bottom:8px; right:10px;
+    font-size:30px;">
+    {ch}
+  </div>
+"""
         # ＊（回転）
         elif ch == "＊":
             html += """
-            <div style="
-              position:absolute;
-              top:50%; left:50%;
-              transform:translate(-50%,-50%) rotate(90deg);
-              font-size:70px;">
-              ＊
-            </div>
-            """
-
+  <div style="
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%) rotate(90deg);
+    font-size:70px;">
+    ＊
+  </div>
+"""
         # その他（中央）
         else:
             html += f"""
-            <div style="
-              position:absolute;
-              top:50%; left:50%;
-              transform:translate(-50%,-50%);
-              font-size:70px;">
-              {ch}
-            </div>
-            """
+  <div style="
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    font-size:70px;">
+    {ch}
+  </div>
+"""
 
     html += "</div>"
     return html
 
 
-# 表示
+# ❗ここが重要（HTMLとして表示）
 st.markdown(draw_symbol(st.session_state.current), unsafe_allow_html=True)
 
 # スコア
