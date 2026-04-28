@@ -86,7 +86,7 @@ def draw_symbol(s):
     position:absolute;
     top:50%; left:50%;
     transform:translate(-50%,-50%);
-    font-size:100px;">
+    font-size:110px;">
     {ch}
   </div>
 """
