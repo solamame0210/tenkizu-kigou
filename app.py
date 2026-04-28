@@ -80,24 +80,26 @@ def draw_symbol(s):
     ＊
   </div>
 """
-        elif ch in "→↑":
+        elif ch in "→":
           html += f"""
-  <div style="
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    font-size:110px;">
-    {ch}
+ <div style="
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:4px;
+  height:80px; 
+  background:black;">
   </div>
 """
-        elif ch in "|":
+        elif ch in "|↑":
           html += f"""
   <div style="
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    font-size:1000px;">
-    {ch}
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:4px;
+  height:80px;   
+  background:black;">
   </div>
 """
         else:
