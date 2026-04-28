@@ -80,6 +80,16 @@ def draw_symbol(s):
     ＊
   </div>
 """
+        elif ch in "→↑｜":
+          html += f"""
+  <div style="
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    font-size:100px;">
+    {ch}
+  </div>
+"""
         else:
             html += f"""
   <div style="
