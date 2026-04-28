@@ -80,7 +80,7 @@ def draw_symbol(s):
     ＊
   </div>
 """
-        elif ch in "→":
+        elif ch in "→↑":
           html += f"""
  <div style="
   position:absolute;
@@ -91,7 +91,7 @@ def draw_symbol(s):
   background:black;">
   </div>
 """
-        elif ch in "|↑":
+        elif ch in "|":
           html += f"""
   <div style="
   position:absolute;
