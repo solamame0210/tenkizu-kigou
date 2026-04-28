@@ -96,9 +96,9 @@ def draw_symbol(s):
   <div style="
   position:absolute;
   top:50%; left:50%;
-  transform:translate(-50%,-42%);
+  transform:translate(-50%,-44%);
   width:4px;
-  height:100px;   
+  height:98px;   
   background:black;">
   </div>
 """
