@@ -25,11 +25,13 @@ ws = {
 "◯×":"天気不明"
 }
 
-st.title("天気記号クイズ（重ね表示）")
+st.title("天気記号クイズ（完全版）")
 
-# セッション状態
+# セッション初期化
 if "current" not in st.session_state:
     st.session_state.current = random.choice(list(ws.keys()))
+if "score" not in st.session_state:
+    st.session_state.score = 0
 
 def draw_symbol(s):
     base = s[0]
@@ -41,33 +43,22 @@ def draw_symbol(s):
     """
 
     for ch in rest:
-        # カタカナ → 右下小さく
-        if ch in "ツニキ":
+        if ch in "ツニキ":  # 小カタカナ右下
             html += f"""
-            <div style="position:absolute;
-                        right:5px;bottom:0;
-                        font-size:30px;">
+            <div style="position:absolute;right:5px;bottom:0;font-size:30px;">
               {ch}
             </div>
             """
-
-        # ＊ → 回転
-        elif ch == "＊":
+        elif ch == "＊":  # 回転
             html += """
-            <div style="position:absolute;
-                        left:30px;top:20px;
-                        font-size:60px;
+            <div style="position:absolute;left:30px;top:20px;font-size:60px;
                         transform:rotate(90deg);">
               *
             </div>
             """
-
-        # その他 → 中央
-        else:
+        else:  # 中央
             html += f"""
-            <div style="position:absolute;
-                        left:30px;top:20px;
-                        font-size:60px;">
+            <div style="position:absolute;left:30px;top:20px;font-size:60px;">
               {ch}
             </div>
             """
@@ -76,16 +67,22 @@ def draw_symbol(s):
     return html
 
 
-# 表示
+# 記号表示
 st.markdown(draw_symbol(st.session_state.current), unsafe_allow_html=True)
 
-# 入力
-answer = st.text_input("意味を入力")
+# スコア表示
+st.write(f"連続正解数：{st.session_state.score}")
 
-# 判定
-if st.button("回答"):
+# Enterで回答（form）
+with st.form(key="quiz_form", clear_on_submit=True):
+    answer = st.text_input("意味を入力")
+    submit = st.form_submit_button("回答")
+
+if submit:
     if answer == ws[st.session_state.current]:
         st.success("正解！")
-        st.session_state.current = random.choice(list(ws.keys()))
+        st.session_state.score += 1  # ②スコア加算
+        st.session_state.current = random.choice(list(ws.keys()))  # ①次の問題
     else:
         st.error(f"不正解：{ws[st.session_state.current]}")
+        st.session_state.score = 0  # ミスでリセット
