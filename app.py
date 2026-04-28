@@ -13,7 +13,7 @@ st.markdown("""
 
 ws = {
 "◯":"快晴",
-"◯｜":"晴",
+"◯|":"晴",
 "◎":"曇",
 "●":"雨",
 "●ツ":"雨強し",
@@ -80,7 +80,7 @@ def draw_symbol(s):
     ＊
   </div>
 """
-        elif ch in "→↑｜":
+        elif ch in "→↑|":
           html += f"""
   <div style="
     position:absolute;
