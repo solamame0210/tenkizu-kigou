@@ -1,5 +1,3 @@
-st.title("天気記号クイズ（完全版）")
-
 st.markdown("""
 <style>
 div {
