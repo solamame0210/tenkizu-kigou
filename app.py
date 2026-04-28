@@ -1,3 +1,12 @@
+st.title("天気記号クイズ（完全版）")
+
+st.markdown("""
+<style>
+div {
+  font-family: "Noto Sans JP", "Arial Unicode MS", sans-serif;
+}
+</style>
+""", unsafe_allow_html=True)
 import streamlit as st
 import random
 
@@ -39,27 +48,38 @@ def draw_symbol(s):
 
     html = f"""
     <div style="position:relative;width:120px;height:120px;margin:auto;">
-      <div style="position:absolute;font-size:100px;">{base}</div>
+      <div style="position:absolute;font-size:100px;
+                  top:50%;left:50%;
+                  transform:translate(-50%,-50%);">
+        {base}
+      </div>
     """
 
     for ch in rest:
-        if ch in "ツニキ":  # 小カタカナ右下
+        if ch in "ツニキ":
             html += f"""
-            <div style="position:absolute;right:5px;bottom:0;font-size:30px;">
+            <div style="position:absolute;bottom:5px;right:8px;font-size:25px;">
               {ch}
             </div>
             """
-        elif ch == "＊":  # 回転
+        elif ch == "＊":
             html += """
-            <div style="position:absolute;left:30px;top:20px;font-size:60px;
-                        transform:rotate(90deg);">
-              *
+            <div style="
+            position:absolute;
+            top:50%;left:50%;
+            transform:translate(-50%,-50%) rotate(90deg);
+            font-size:60px;">
+            *
             </div>
             """
-        else:  # 中央
+        else:
             html += f"""
-            <div style="position:absolute;left:30px;top:20px;font-size:60px;">
-              {ch}
+            <div style="
+            position:absolute;
+            top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            font-size:60px;">
+            {ch}
             </div>
             """
 
